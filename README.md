@@ -54,9 +54,3 @@ The frontend is deliberately dependency-free so it runs anywhere with zero insta
 1. `npm create vite@latest taskflow-frontend -- --template react`
 2. Move the JSX-shaped logic in `app.js` — each section (`AuthScreen`, `Dashboard`, `ProjectView`, `TaskCard`, `ProjectModal`) already maps 1:1 onto a React function component; the `el(...)` calls become JSX tags and the manual `render()`/`rerender()` calls become `useState`.
 3. Reuse `styles.css` and `config.js` as-is, and the Flask API is unchanged.
-
-## Notes / things to call out in an interview
-
-- Passwords are hashed with `werkzeug.security` (PBKDF2), never stored in plaintext.
-- Every project/task route re-checks `owner_id` server-side — a user can't read or mutate another user's data even if they guess an ID.
-- `flask-cors`/`flask-sqlalchemy`/`flask-jwt-extended` were intentionally swapped for stdlib `sqlite3` + `PyJWT` + a 3-line CORS `after_request` hook, to keep the dependency footprint (and the amount of "magic") minimal for a portfolio piece — the `requirements.txt` reflects that.
